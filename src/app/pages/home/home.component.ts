@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+    movies: any = [];
+    constructor(private moviesService: MoviesService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    // 페이지가 로딩 될때까지 기다려준다.
+    ngOnInit(): void {
+        this.moviesService.getMovies().subscribe((response: any) => {
+            this.movies = response.results;
+            console.log(this.movies);
+        });
+    }
 }
